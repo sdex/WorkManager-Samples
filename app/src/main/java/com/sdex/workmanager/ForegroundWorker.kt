@@ -45,7 +45,7 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
             .setContentTitle("Important background job")
             .setProgress(100, progress, false)
             .build()
-        notificationManager?.notify(42, notification)
+        notificationManager?.notify(NOTIFICATION_ID, notification)
     }
 
     private fun createNotificationChannel() {
