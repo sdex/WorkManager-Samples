@@ -26,7 +26,7 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
             .setContentTitle("Important background job")
             .build()
 
-        val foregroundInfo = ForegroundInfo(notification)
+        val foregroundInfo = ForegroundInfo(NOTIFICATION_ID, notification)
         setForeground(foregroundInfo)
 
         for (i in 0..100) {
@@ -63,7 +63,6 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
 
     companion object {
 
-        // From SystemForegroundDispatcher
         const val NOTIFICATION_ID = 42
         const val TAG = "ForegroundWorker"
         const val channelId = "Job progress"
