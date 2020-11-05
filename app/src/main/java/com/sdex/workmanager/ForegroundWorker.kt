@@ -12,8 +12,10 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import kotlinx.coroutines.delay
 
-class ForegroundWorker(appContext: Context, params: WorkerParameters) :
-    CoroutineWorker(appContext, params) {
+class ForegroundWorker(
+    appContext: Context,
+    params: WorkerParameters
+) : CoroutineWorker(appContext, params) {
 
     private val notificationManager = appContext.getSystemService(NotificationManager::class.java)
 
@@ -21,7 +23,7 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
         Log.d(TAG, "Start job")
 
         createNotificationChannel()
-        val notification = NotificationCompat.Builder(applicationContext, channelId)
+        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Important background job")
             .build()
@@ -30,9 +32,9 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
         setForeground(foregroundInfo)
 
         for (i in 0..100) {
-            setProgress(workDataOf(Progress to i))
+            setProgress(workDataOf(ARG_PROGRESS to i))
             showProgress(i)
-            delay(delayDuration)
+            delay(DELAY_DURATION)
         }
 
         Log.d(TAG, "Finish job")
@@ -40,7 +42,7 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
     }
 
     private fun showProgress(progress: Int) {
-        val notification = NotificationCompat.Builder(applicationContext, channelId)
+        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Important background job")
             .setProgress(100, progress, false)
@@ -50,11 +52,10 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var notificationChannel =
-                notificationManager?.getNotificationChannel(channelId)
+            var notificationChannel = notificationManager?.getNotificationChannel(CHANNEL_ID)
             if (notificationChannel == null) {
                 notificationChannel = NotificationChannel(
-                    channelId, TAG, NotificationManager.IMPORTANCE_LOW
+                    CHANNEL_ID, TAG, NotificationManager.IMPORTANCE_LOW
                 )
                 notificationManager?.createNotificationChannel(notificationChannel)
             }
@@ -63,10 +64,10 @@ class ForegroundWorker(appContext: Context, params: WorkerParameters) :
 
     companion object {
 
-        const val NOTIFICATION_ID = 42
         const val TAG = "ForegroundWorker"
-        const val channelId = "Job progress"
-        const val Progress = "Progress"
-        private const val delayDuration = 100L
+        const val NOTIFICATION_ID = 42
+        const val CHANNEL_ID = "Job progress"
+        const val ARG_PROGRESS = "Progress"
+        private const val DELAY_DURATION = 100L // ms
     }
 }
