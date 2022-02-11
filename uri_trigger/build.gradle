@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    namespace 'dev.sdex.uritrigger'
+    compileSdk 32
 
     defaultConfig {
-        applicationId "com.sdex.workmanager"
-        minSdkVersion 23
-        targetSdkVersion 32
+        applicationId "dev.sdex.uritrigger"
+        minSdk 24
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -22,16 +23,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    viewBinding {
-        enabled = true
+        jvmTarget = '1.8'
     }
 }
 
@@ -40,4 +37,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.work:work-runtime-ktx:$work_manager"
+    implementation "com.google.android.material:material:1.5.0"
 }

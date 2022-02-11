@@ -6,15 +6,15 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.sdex.workmanager.ForegroundWorker.Companion.ARG_PROGRESS
-import com.sdex.workmanager.databinding.ActivityMainBinding
+import com.sdex.workmanager.databinding.ActivityForegroundBinding
 
-class MainActivity : AppCompatActivity() {
+class ForegroundActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityForegroundBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityForegroundBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val workManager = WorkManager.getInstance(this)
