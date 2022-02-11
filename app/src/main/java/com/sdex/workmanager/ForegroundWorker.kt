@@ -19,20 +19,22 @@ class ForegroundWorker(
 
     private val notificationManager = appContext.getSystemService(NotificationManager::class.java)
 
+    private val notificationBuilder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setContentTitle("Important background job")
+
     override suspend fun doWork(): Result {
         Log.d(TAG, "Start job")
 
         createNotificationChannel()
-        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Important background job")
-            .build()
-
+        val notification = notificationBuilder.build()
         val foregroundInfo = ForegroundInfo(NOTIFICATION_ID, notification)
         setForeground(foregroundInfo)
 
         for (i in 0..100) {
+            // we need it to get progress in UI
             setProgress(workDataOf(ARG_PROGRESS to i))
+            // update the notification progress
             showProgress(i)
             delay(DELAY_DURATION)
         }
@@ -41,23 +43,23 @@ class ForegroundWorker(
         return Result.success()
     }
 
-    private fun showProgress(progress: Int) {
-        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Important background job")
+    private suspend fun showProgress(progress: Int) {
+        val notification = notificationBuilder
             .setProgress(100, progress, false)
             .build()
-        notificationManager?.notify(NOTIFICATION_ID, notification)
+        val foregroundInfo = ForegroundInfo(NOTIFICATION_ID, notification)
+        setForeground(foregroundInfo)
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var notificationChannel = notificationManager?.getNotificationChannel(CHANNEL_ID)
+            val notificationChannel = notificationManager?.getNotificationChannel(CHANNEL_ID)
             if (notificationChannel == null) {
-                notificationChannel = NotificationChannel(
-                    CHANNEL_ID, TAG, NotificationManager.IMPORTANCE_LOW
+                notificationManager?.createNotificationChannel(
+                    NotificationChannel(
+                        CHANNEL_ID, TAG, NotificationManager.IMPORTANCE_LOW
+                    )
                 )
-                notificationManager?.createNotificationChannel(notificationChannel)
             }
         }
     }
