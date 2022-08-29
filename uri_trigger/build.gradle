@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'dev.sdex.uritrigger'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "dev.sdex.uritrigger"
         minSdk 24
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -33,9 +33,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation "androidx.work:work-runtime-ktx:$work_manager"
-    implementation "com.google.android.material:material:1.5.0"
 }

@@ -20,7 +20,7 @@ class ForegroundWorker(
     private val notificationManager = appContext.getSystemService(NotificationManager::class.java)
 
     private val notificationBuilder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-        .setSmallIcon(R.mipmap.ic_launcher)
+        .setSmallIcon(R.drawable.baseline_build_24)
         .setContentTitle("Important background job")
 
     override suspend fun doWork(): Result {
