@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 34
+    namespace 'com.sdex.workmanager'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sdex.workmanager"
-        minSdkVersion 23
-        targetSdkVersion 34
+        minSdk 24
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -24,11 +25,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = '17'
     }
     viewBinding {
         enabled = true
@@ -36,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation "androidx.appcompat:appcompat:$appcompat"
+    implementation "androidx.core:core-ktx:$core"
     implementation "androidx.work:work-runtime-ktx:$work_manager"
 }
